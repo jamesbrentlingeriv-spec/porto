@@ -1,0 +1,204 @@
+export interface ProjectData {
+  id: string;
+  title: string;
+  size: string;
+  date: string;
+  type: string;
+  iconName: 'Terminal' | 'Layout' | 'Gamepad2' | 'Globe' | 'Cpu' | 'Activity' | 'ShieldAlert' | 'BookOpen' | 'RefreshCw' | 'Box' | 'GraduationCap' | 'BarChart3';
+  description: string;
+  systemOverview: string;
+  tags: string[];
+  role: string;
+  launchUrl?: string;
+  sourceUrl?: string;
+  videoUrl?: string;
+  customIconUrl?: string;
+  screenshots?: string[];
+}
+
+export const projects: ProjectData[] = [
+  {
+    id: "prj_01",
+    title: "P.O.S.T._Slip_Tool.exe",
+    size: "8.4 MB",
+    date: "02-15-2026",
+    type: "Application",
+    iconName: "Terminal",
+    description:
+      "A specialized laboratory intake and digital write-up tool designed to streamline optical store workflows. Replaces manual paper ticketing with a fast, error-resistant interface for processing lens orders. Automatically deducts insurace discounts as well as limiting lens options depending on which insurance is chosen. ",
+    systemOverview:
+      "Designed and deployed a highly optimized data-entry system tailored specifically for high-volume optical dispensaries. Implements strict client-side validation for ophthalmic measurements (spheres, cylinders, axes, and prism values) to catch prescription anomalies before laboratory submission. The interface utilizes a lightweight, scannable layout built with React to maximize keyboard-driven input speed, completely eliminating layout layout lag. Features persistent local caching to prevent data loss during network disruptions, alongside clean architectural decoupling to isolate sensitive clinical data from direct financial parameters.",
+    tags: [
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Vercel",
+      "Local Storage API",
+    ],
+    role: "Lead Developer & Domain Expert",
+    customIconUrl: "/projecticon/post.png",
+    videoUrl: "/projectvid/post.mp4",
+  },
+  {
+    id: 'prj_02',
+    title: 'Pal_Optical_Master_Toolkit.exe',
+    size: '18.7 MB',
+    date: '05-12-2026',
+    type: 'Application',
+    iconName: 'Activity',
+    description: 'An advanced, all-in-one suite of mathematical calculators and utility tools engineered for retail opticians and laboratory technicians to automate complex ophthalmic formulas.',
+    systemOverview: 'Developed a robust suite of optical engineering utilities designed to eliminate manual geometric calculation errors. Features high-precision algorithmic engines for computing sagittal depth, prism compensation, vertical imbalance, and precise lens surfacing parameters. Built with high-performance TypeScript to ensure instant recalculations during live patient data entry, and styled with clean, scannable layouts that prioritize rapid data digestion. Includes an embedded, customizable database of lens materials and index values to automatically scale index-dependent formulas like the lensmaker\'s equation across various mediums.',
+    tags: ['React', 'TypeScript', 'Tailwind CSS', 'Math.js', 'Vite', 'Netlify'],
+    role: 'Solo Architect & Optical Engineer',
+    videoUrl: '/projectvid/palopticaltoolkit.mp4',
+    screenshots: [
+      '/screenshot/palopticaltoolkit/calc.png',
+      '/screenshot/palopticaltoolkit/clo.png',
+      '/screenshot/palopticaltoolkit/inv.png',
+      '/screenshot/palopticaltoolkit/lensview.png',
+      '/screenshot/palopticaltoolkit/lin.png',
+      '/screenshot/palopticaltoolkit/pq.png',
+      '/screenshot/palopticaltoolkit/receipt.png'
+    ]
+  },
+  {
+    id: 'prj_03',
+    title: 'Ocu_Sync_Messenger.exe',
+    size: '22.1 MB',
+    date: '03-18-2026',
+    type: 'Application',
+    iconName: 'ShieldAlert',
+    description: 'A secure, HIPAA-compliant clinical messaging application engineered specifically for optical teams to coordinate patient care and laboratory orders in real time.',
+    systemOverview: 'Architected and implemented a secure communication platform utilizing end-to-end encryption to safely transmit protected health information (PHI) across optical dispensaries and labs. Built with a robust pub/sub architecture to handle real-time message delivery, order updates, and status alerts with minimal latency. Designed under strict compliance parameters, incorporating mandatory user authentication timeouts, immutable audit logging for message trails, and role-based access control. Implements Business Associate Agreement (BAA) protocols structurally within the app\'s data isolation layer to ensure absolute legal and technical adherence to healthcare privacy regulations.',
+    tags: ['React', 'TypeScript', 'Node.js', 'WebSockets', 'Tailwind CSS', 'SignPath'],
+    role: 'Full-Stack Architect & Compliance Lead',
+    customIconUrl: '/projecticon/ocu-sync.png',
+    sourceUrl: 'https://ocu-sync.com',
+    videoUrl: '/projectvid/ocusync.mp4',
+  },
+  {
+    id: 'prj_04',
+    title: 'Bible_Study_Suite.exe',
+    size: '31.4 MB',
+    date: '05-23-2026',
+    type: 'Application',
+    iconName: 'BookOpen',
+    description: 'A comprehensive progressive web application (PWA) designed for deep scriptural analysis, parallel text reading, multimedia study capturing, and structured theological note-taking.',
+    systemOverview: 'Engineered a multi-panel workspace utilizing semantic HTML5 and vanilla JavaScript architecture optimized for layout performance. Implements structural parallel view tracking enabling seamless side-by-side textual comparative studies between canonical translations (KJV, ASV, WEB, YLT) and local iframe-isolated original source texts (Hebrew/Greek Ancient Reader). Features a regex-driven context-scanning engine that reactively parses user text area inputs to extract inline verse references (e.g., John 3:16) and automatically populate a real-time contextual sidebar. Integrated a low-latency Web Audio API subsystem with an interactive HTML5 canvas audio visualizer for sermon recordings, absolute local data persistence via secure web caching API layers, and a decoupled multimedia reference model for embedded study track audio/lyrics strings.',
+    tags: ['JavaScript', 'Tailwind CSS', 'Lucide Icons', 'Web Audio API', 'HTML5 Canvas', 'PWA / Manifest'],
+    role: 'Solo Architect & Front-End Developer',
+    customIconUrl: '/projecticon/biblestudy.png',
+    sourceUrl: 'https://jamesbrentlingeriv-spec.github.io/biblestudy/',
+    screenshots: [
+      '/projectvid/biblestudysuite.gif',
+      '/projectvid/ancientbiblereader.mp4',
+    ],
+  },
+  {
+    id: 'prj_05',
+    title: 'OptiTrak_Remake_Manager.exe',
+    size: '11.8 MB',
+    date: '04-10-2026',
+    type: 'Application',
+    iconName: 'RefreshCw',
+    description: 'A dedicated laboratory management tracking utility designed to isolate, analyze, and minimize lab lens remakes and warranty discrepancies in optical retail environments.',
+    systemOverview: 'Engineered a targeted reporting dashboard to track lifecycle telemetry of laboratory lens remakes and failure modes (e.g., doctor changes, lab edging errors, or non-adaptations). Implements a highly analytical layout optimized for desktop environments, utilizing structured relational filtering to sort data by vendor, lens material, and specific optician parameters. Built to aggregate historical data streams, enabling dispensing teams to uncover underlying pattern trends, calculate dynamic error percentages, and implement immediate quality control measures to protect profit margins. Decoupled and containerized for static rendering, ensuring zero external payload latency during high-velocity data lookups.',
+    tags: ['React', 'TypeScript', 'Tailwind CSS', 'Recharts', 'Vite', 'GitHub Pages'],
+    role: 'Solo Developer & Domain Expert',
+    customIconUrl: '/projecticon/ocutrack.png',
+    sourceUrl: 'https://jamesbrentlingeriv-spec.github.io/OPTITRAK/',
+    videoUrl: '/projectvid/ocutrack.mp4',
+  },
+  {
+    id: 'prj_06',
+    title: 'Opti_Calc_3D.exe',
+    size: '24.5 MB',
+    date: '05-18-2026',
+    type: 'Application',
+    iconName: 'Box',
+    description: 'A high-fidelity, three-dimensional ophthalmic visualization tool designed to simulate lens thickness profiles, sagittal depth variations, and light refraction anomalies in real time.',
+    systemOverview: 'Architected an interactive 3D rendering engine optimized for web environments to visually demonstrate complex optical geometry. Implements customized shader algorithms to calculate and display real-time physical thickness maps across varying lens materials, base curves, and complex prescription parameters (including high cylinder and prism configurations). Utilizes reactive input bindings to allow instant manipulations of the 3D lens model, providing dispensing opticians with a powerful tool to demonstrate edge thickness and center thickness differentials to patients before laboratory surfacing. Decoupled mathematical formula matrices from the rendering cycle to maintain a fluid 60 FPS profile during dynamic calculation updates.',
+    tags: ['React', 'Three.js', 'WebGL', 'TypeScript', 'Tailwind CSS', 'Vite'],
+    role: 'Solo Architect & Optical Engineer',
+    customIconUrl: '/projecticon/opticalc.png',
+    sourceUrl: 'https://jamesbrentlingeriv-spec.github.io/OPTI-CALC-3D/',
+    videoUrl: '/projectvid/opticalc.mp4',
+  },
+  {
+    id: 'prj_07',
+    title: 'OptiStep_Academy.exe',
+    size: '19.3 MB',
+    date: '05-20-2026',
+    type: 'Application',
+    iconName: 'GraduationCap',
+    description: 'An interactive, AI-enhanced educational platform designed to train apprentice opticians on standardized ophthalmic concepts, optical physics formulas, and clinical dispensing protocols.',
+    systemOverview: 'Engineered a structured digital curriculum platform built specifically to streamline workforce development in the optical industry. Implements an automated, interactive modular learning framework that breaks down complex ABO/NCLE competencies into digestible, scannable milestones. Features specialized algorithmic practice modules for optical math—including lens clock conversions, transposition, and prism calculations—providing instant feedback and adaptive reinforcement to students. Designed with a clean, high-efficiency navigation system and localized state caching to track lesson telemetry, quiz performance, and mastery pacing across diverse learning environments.',
+    tags: ['React', 'TypeScript', 'Tailwind CSS', 'Vite', 'Framer Motion', 'GitHub Pages'],
+    role: 'Solo Curriculum Architect & Developer',
+    customIconUrl: '/projecticon/optistep.png',
+    sourceUrl: 'https://github.com/jamesbrentlingeriv-spec/OptiStep',
+    screenshots: [
+      '/screenshot/optistep/optistep1.png',
+      '/screenshot/optistep/optistep2.png',
+    ],
+  },
+  {
+    id: 'prj_08',
+    title: 'Visus_Space_Platform.exe',
+    size: '42.1 MB',
+    date: '05-15-2026',
+    type: 'Application',
+    iconName: 'Globe',
+    description: 'A comprehensive web ecosystem serving as the central hub for open-source optical software deployment, educational resource distribution, and professional community collaboration.',
+    systemOverview: 'Designed and engineered a high-performance web domain configured to scale across global deployment layers. Acts as the primary cloud framework hosting proprietary ophthalmic applications, interactive curriculum modules, and unified secure messaging gateways. Built utilizing modern responsive frameworks to ensure instant asset delivery, fluid multi-device scaling, and decoupled micro-service loading. Implements advanced continuous integration and deployment (CI/CD) automated pipelines to dynamically serve version-controlled code architectures directly to clinical endpoints without downtime.',
+    tags: ['React', 'TypeScript', 'Tailwind CSS', 'Vercel', 'Netlify', 'CI/CD Pipelines'],
+    role: 'Founder & Lead Enterprise Architect',
+    customIconUrl: '/projecticon/visus.png',
+    sourceUrl: 'https://visus.space/',
+    screenshots: [
+      '/screenshot/visus/visus1.png',
+      '/screenshot/visus/visus2.png',
+      '/screenshot/visus/visus3.png',
+      '/screenshot/visus/visus4.png',
+      '/screenshot/visus/visus5.png',
+    ],
+  },
+  {
+    id: 'prj_09',
+    title: 'OptiChart_EHR.exe',
+    size: '15.6 MB',
+    date: '05-21-2026',
+    type: 'Application',
+    iconName: 'BarChart3',
+    description: 'A dynamic, cloud-hosted visual diagnostics and acuity chart simulator engineered for digital refraction lanes and streamlined patient vision charting.',
+    systemOverview: 'Developed a high-performance visual acuity and testing suite optimized for instantaneous rendering across digital displays and tablet interfaces. Implements calibrated optotype scaling and crisp vector configurations to ensure precise mathematical sizing across various viewing distances and screen resolutions. Features a highly intuitive, hotkey-driven controller layout designed for rapid, real-time testing shifts during patient examinations. Fully containerized and optimized for edge deployment to completely eliminate network latency, offering clinical teams a reliable, hardware-agnostic alternative to traditional standalone projection systems.',
+    tags: ['React', 'TypeScript', 'Tailwind CSS', 'Vercel', 'SVG Canvas', 'Vite'],
+    role: 'Solo Architect & System Developer',
+    customIconUrl: '/projecticon/optichart.png',
+    sourceUrl: 'https://optichart.vercel.app/',
+    screenshots: [
+      '/screenshot/optichart/optichart1.png',
+      '/screenshot/optichart/optichart2.png',
+      '/screenshot/optichart/optichart3.png',
+      '/screenshot/optichart/optichart4.png',
+      '/screenshot/optichart/optichart5.png',
+      '/screenshot/optichart/optichart6.png',
+      '/screenshot/optichart/optichart7.png',
+    ],
+  },
+  {
+    id: 'prj_10',
+    title: 'Pal_Optical_Simulator.exe',
+    size: '28.9 MB',
+    date: '05-22-2026',
+    type: 'Application',
+    iconName: 'Gamepad2',
+    description: 'An interactive, gamified simulation environment designed to mimic the fast-paced daily operations, patient interactions, and troubleshooting workflows of a retail optical dispensary.',
+    systemOverview: 'Engineered an engaging operational simulator to model retail eyecare workflows, frame selections, and laboratory intake routing. Implements complex state machines to drive dynamic patient profiles, unpredictable script scenarios, and realistic dispensary challenges (such as managing frame order backlogs or resolving lens adaptation complaints). Built with reactive UI states to provide instant user feedback based on clinical decision accuracy, helping apprentice opticians build muscle memory for store protocols. Completely decoupled core simulation logic from visual assets to ensure responsive rendering, snappy input handling, and localized high-score or progress telemetry tracking.',
+    tags: ['React', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'Vite', 'Local Storage API'],
+    role: 'Solo Architect & Game Designer',
+    sourceUrl: 'https://pal-optical-sim.vercel.app/',
+    customIconUrl: '/projecticon/palsim.png',
+    videoUrl: '/projectvid/palsim.mp4',
+  },
+];

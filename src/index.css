@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+@theme {
+  --color-os-bg: #0F1729;
+  --color-os-text: #FFFFFF;
+  --color-os-border: #FFFFFF;
+  --color-os-window: #0F1729;
+  --color-os-titlebar: #FFFFFF;
+  --color-os-titlebar-text: #0F1729;
+}
+
+@layer base {
+  body, html, #root {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--color-os-bg);
+    color: var(--color-os-text);
+    font-family: 'Courier New', Courier, monospace;
+    cursor: none;
+    /* High-contrast monochrome text glow */
+    text-shadow: 0 0 2px rgba(255, 255, 255, 0.4), 0 0 8px rgba(255, 255, 255, 0.2);
+  }
+
+  * {
+    user-select: none;
+  }
+  input, textarea, [contenteditable="true"] {
+    user-select: auto;
+  }
+}
+
+/* CRT Screen Effects */
+@layer utilities {
+  .crt-scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0) 50%,
+      rgba(0, 0, 0, 0.25) 50%,
+      rgba(0, 0, 0, 0.25)
+    );
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 9998;
+  }
+
+  .crt-flicker {
+    animation: crtFlicker 0.15s infinite;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  .crt-vignette {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(
+      circle,
+      rgba(0,0,0,0) 60%,
+      rgba(0,0,0,0.5) 100%
+    );
+    pointer-events: none;
+    z-index: 9997;
+  }
+}
+
+@keyframes crtFlicker {
+  0% { opacity: 0.98; }
+  50% { opacity: 0.94; }
+  100% { opacity: 0.99; }
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-os-bg);
+  border-left: 1px solid var(--color-os-border);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-os-text);
+}
+::-webkit-scrollbar-corner {
+  background: var(--color-os-bg);
+}
