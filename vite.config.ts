@@ -11,9 +11,9 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       workbox: {
-        // Exclude large files and media from precache
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2,woff,ttf,eot}'],
-        globIgnores: ['**/portrait.png', '**/music/**/*', '**/screensaver.gif'], // Exclude large files
+        // Exclude large files and media from precache but allow runtime caching
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2,woff,ttf,eot,json}'],
+        globIgnores: ['**/portrait.png', '**/music/**/*', '**/screensaver.gif', '**/projectvid/**/*', '**/desktopicon/**/*', '**/projecticon/**/*', '**/wallpaper/**/*'], // Exclude large files
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
@@ -37,6 +37,34 @@ export default defineConfig({
               expiration: {
                 maxEntries: 10,
                 maxAgeSeconds: 60 * 60 * 24 * 365 // 1 year
+              },
+              cacheableResponse: {
+                statuses: [0, 200]
+              }
+            }
+          },
+          {
+            urlPattern: /^.*\/projectvid\/.*\.(mp4|webm|ogg)$/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'video-cache',
+              expiration: {
+                maxEntries: 20, // Limit number of videos cached
+                maxAgeSeconds: 30 * 24 * 60 * 60 // 30 days
+              },
+              cacheableResponse: {
+                statuses: [0, 200]
+              }
+            }
+          },
+          {
+            urlPattern: /^.*\.(png|jpg|jpeg|gif)$/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'image-cache',
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 7 * 24 * 60 * 60 // 7 days
               },
               cacheableResponse: {
                 statuses: [0, 200]
