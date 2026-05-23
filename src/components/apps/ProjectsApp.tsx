@@ -34,9 +34,15 @@ const ICONS = {
   BarChart3: BarChart3,
 };
 
-const ProjectsApp: React.FC = () => {
+interface ProjectsAppProps {
+  selectedProject?: ProjectData | null;
+}
+
+const ProjectsApp: React.FC<ProjectsAppProps> = ({
+  selectedProject: initialSelectedProject,
+}) => {
   const [selectedProject, setSelectedProject] = useState<ProjectData | null>(
-    null,
+    initialSelectedProject || null,
   );
 
   if (selectedProject) {
@@ -93,32 +99,33 @@ const ProjectsApp: React.FC = () => {
             )}
 
             {/* Screenshots / Additional Media */}
-            {selectedProject.screenshots && selectedProject.screenshots.length > 0 && (
-              <div className="my-3 flex flex-col gap-3">
-                {selectedProject.screenshots.map((src, idx) =>
-                  src.endsWith('.mp4') ? (
-                    <video
-                      key={idx}
-                      src={src}
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      className="border-2 border-gray-700 w-full h-auto object-contain bg-black"
-                      draggable={false}
-                    />
-                  ) : (
-                    <img
-                      key={idx}
-                      src={src}
-                      alt={`${selectedProject.title} screenshot ${idx + 1}`}
-                      className="border-2 border-gray-700 w-full h-auto object-contain bg-black"
-                      draggable={false}
-                    />
-                  )
-                )}
-              </div>
-            )}
+            {selectedProject.screenshots &&
+              selectedProject.screenshots.length > 0 && (
+                <div className="my-3 flex flex-col gap-3">
+                  {selectedProject.screenshots.map((src, idx) =>
+                    src.endsWith(".mp4") ? (
+                      <video
+                        key={idx}
+                        src={src}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="border-2 border-gray-700 w-full h-auto object-contain bg-black"
+                        draggable={false}
+                      />
+                    ) : (
+                      <img
+                        key={idx}
+                        src={src}
+                        alt={`${selectedProject.title} screenshot ${idx + 1}`}
+                        className="border-2 border-gray-700 w-full h-auto object-contain bg-black"
+                        draggable={false}
+                      />
+                    ),
+                  )}
+                </div>
+              )}
 
             <div className="flex gap-4 text-xs text-gray-400 mb-2 border-b border-gray-700 pb-2">
               <span>TYPE: {selectedProject.type}</span>
@@ -182,7 +189,12 @@ const ProjectsApp: React.FC = () => {
                 className="w-full border-2 border-white text-white font-bold py-2 hover:bg-white hover:text-black transition-colors flex items-center justify-center gap-2"
               >
                 <GitBranch size={16} />
-                VISIT_{selectedProject.sourceUrl.replace(/^https?:\/\//, '').replace(/\/$/, '').toUpperCase().replace(/\./g, '_')}
+                VISIT_
+                {selectedProject.sourceUrl
+                  .replace(/^https?:\/\//, "")
+                  .replace(/\/$/, "")
+                  .toUpperCase()
+                  .replace(/\./g, "_")}
               </a>
             ) : (
               <div className="w-full text-center py-2 font-bold text-yellow-400 border-2 border-yellow-400">
@@ -199,7 +211,7 @@ const ProjectsApp: React.FC = () => {
     <div className="flex flex-col h-full font-mono text-sm select-none">
       {/* Directory Header */}
       <div className="flex items-center justify-between border-b-2 border-white pb-2 mb-2 shrink-0">
-        <div className="font-bold">C:\PROJECTS{'>'} dir</div>
+        <div className="font-bold">C:\PROJECTS{">"} dir</div>
         <div className="text-gray-400">{projects.length} File(s)</div>
       </div>
 
