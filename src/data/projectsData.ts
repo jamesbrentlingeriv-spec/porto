@@ -4,7 +4,7 @@ export interface ProjectData {
   size: string;
   date: string;
   type: string;
-  iconName: 'Terminal' | 'Layout' | 'Gamepad2' | 'Globe' | 'Cpu' | 'Activity' | 'ShieldAlert' | 'BookOpen' | 'RefreshCw' | 'Box' | 'GraduationCap' | 'BarChart3' | 'Book';
+  iconName: 'Terminal' | 'Layout' | 'Gamepad2' | 'Globe' | 'Cpu' | 'Activity' | 'ShieldAlert' | 'BookOpen' | 'RefreshCw' | 'Box' | 'GraduationCap' | 'BarChart3' | 'Book' | 'Eye';
   description: string;
   systemOverview: string;
   tags: string[];
@@ -235,5 +235,20 @@ export const projects: ProjectData[] = [
     sourceUrl: 'https://youwillsee.us',
     screenshots: ['/darkeye/sump/The Sump.png'],
     launchUrl: '/darkeye/sump/the-sump-DIGEST.pdf',
+  },
+  {
+    id: 'prj_13',
+    title: 'Pal_Optical_Boutique.exe',
+    size: '22.8 MB',
+    date: '05-24-2026',
+    type: 'Application',
+    iconName: 'Eye',
+    description: 'A dark-mode, high-end digital storefront for Lexington\u2019s premium optical boutique and lens laboratory, featuring reactive designer frame grids and interactive custom lens configurations.',
+    systemOverview: 'Architected a sophisticated boutique web application engineered around a sleek, high-contrast dark aesthetic that mirrors a luxury brick-and-mortar dispensary. Implements a performant, fluid grid engine that dynamically parses and presents premium frame categories (Premium Aviators, Bespoke Tortoise, Modern Geometric) alongside immediate sizing telemetry (e.g., 52-18-140) and specialized glass material properties. Features a decoupled, interactive lens customization utility allowing users to structurally toggle between varying base curves, specialized polarization filters, and edge finishing coatings with instant visual feedback. Fully responsive layout utilizing tight modern grid alignment to maintain a scannable, elite-tier brand identity without rendering lag.',
+    tags: ['React', 'TypeScript', 'Tailwind CSS', 'Vite', 'Framer Motion', 'Google Cloud Run'],
+    role: 'Solo Architect & Optical UX Lead',
+    customIconUrl: '/projecticon/palsite.png',
+    videoUrl: '/projectvid/palsite2.mp4',
+    sourceUrl: 'https://pal-optical-boutique-1069426498989.us-west1.run.app',
   },
 ];

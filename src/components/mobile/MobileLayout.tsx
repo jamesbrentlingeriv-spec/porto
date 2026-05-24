@@ -209,7 +209,7 @@ const MobileLayout: React.FC = () => {
           
           {/* 4x4 Project Grid - iPad home screen style */}
 <div className="grid grid-cols-4 gap-6 place-items-center flex-1 px-4 pb-10 overflow-y-auto">
-             {projects.slice(0, 16).map((project) => (
+              {projects.map((project) => (
                <div key={project.id} className="w-full flex justify-center">
                 <ProjectIcon
                   project={project}

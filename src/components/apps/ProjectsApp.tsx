@@ -16,6 +16,7 @@ import {
   GraduationCap,
   BarChart3,
   Book,
+  Eye,
   X,
 } from "lucide-react";
 import { projects } from "../../data/projectsData";
@@ -35,6 +36,7 @@ const ICONS = {
   GraduationCap: GraduationCap,
   BarChart3: BarChart3,
   Book: Book,
+  Eye: Eye,
 };
 
 interface ProjectsAppProps {
