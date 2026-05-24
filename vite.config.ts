@@ -13,7 +13,7 @@ export default defineConfig({
       workbox: {
         // Exclude large files and media from precache but allow runtime caching
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2,woff,ttf,eot,json}'],
-        globIgnores: ['**/portrait.png', '**/music/**/*', '**/screensaver.gif', '**/projectvid/**/*', '**/desktopicon/**/*', '**/projecticon/**/*', '**/wallpaper/**/*'], // Exclude large files
+        globIgnores: ['**/portrait.png', '**/music/**/*', '**/screensaver.gif', '**/projectvid/**/*', '**/desktopicon/**/*', '**/projecticon/**/*', '**/wallpaper/**/*', '**/darkeye/**/*'], // Exclude large files
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
