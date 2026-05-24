@@ -51,7 +51,7 @@ const ProjectsApp: React.FC<ProjectsAppProps> = ({
   const [viewingWebsite, setViewingWebsite] = useState<string | null>(null);
   const [viewingEpub, setViewingEpub] = useState<string | null>(null);
   const epubContainerRef = useRef<HTMLDivElement>(null);
-  const epubInstanceRef = useRef<any>(null);
+  const epubInstanceRef = useRef<{ destroy: () => void } | null>(null);
 
   useEffect(() => {
     if (viewingEpub && epubContainerRef.current && !epubInstanceRef.current) {
@@ -195,37 +195,36 @@ const ProjectsApp: React.FC<ProjectsAppProps> = ({
           </div>
 
 {/* External Links */}
-           <div className="mt-auto pt-4 border-t-2 border-gray-800 shrink-0 flex gap-4">
-             {selectedProject.launchUrl && (
-               selectedProject.launchUrl.endsWith('.pdf') ? (
-                 <button
-                   onClick={() => setViewingPdf(selectedProject.launchUrl!)}
-                   className="flex-1 bg-white text-black font-bold py-2 hover:bg-gray-300 active:bg-gray-500 transition-colors flex items-center justify-center gap-2"
-                 >
-                   <ExternalLink size={16} />
-                   VIEW_DOCUMENT.pdf
-                 </button>
-               ) : selectedProject.launchUrl.endsWith('.epub') ? (
-                 <a
-                   href={selectedProject.launchUrl}
-                   download={selectedProject.launchUrl.split('/').pop()}
-                   className="flex-1 bg-white text-black font-bold py-2 hover:bg-gray-300 active:bg-gray-500 transition-colors flex items-center justify-center gap-2"
-                 >
-                   <ExternalLink size={16} />
-                   DOWNLOAD_EBOOK.epub
-                 </a>
-               ) : (
-                 <a
-                   href={selectedProject.launchUrl}
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   className="flex-1 bg-white text-black font-bold py-2 hover:bg-gray-300 active:bg-gray-500 transition-colors flex items-center justify-center gap-2"
-                 >
-                   <ExternalLink size={16} />
-                   LAUNCH_APP.exe
-                 </a>
-               )
-             )}
+            <div className="mt-auto pt-4 border-t-2 border-gray-800 shrink-0 flex gap-4">
+              {selectedProject.launchUrl && (
+                selectedProject.launchUrl.endsWith('.pdf') ? (
+                  <button
+                    onClick={() => setViewingPdf(selectedProject.launchUrl!)}
+                    className="flex-1 bg-white text-black font-bold py-2 hover:bg-gray-300 active:bg-gray-500 transition-colors flex items-center justify-center gap-2"
+                  >
+                    <ExternalLink size={16} />
+                    VIEW_DOCUMENT.pdf
+                  </button>
+                ) : selectedProject.launchUrl.endsWith('.epub') ? (
+                  <button
+                    onClick={() => setViewingEpub(selectedProject.launchUrl!)}
+                    className="flex-1 bg-white text-black font-bold py-2 hover:bg-gray-300 active:bg-gray-500 transition-colors flex items-center justify-center gap-2"
+                  >
+                    <Book size={16} />
+                    READ_EBOOK.epub
+                  </button>
+                ) : (
+                  <a
+                    href={selectedProject.launchUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 bg-white text-black font-bold py-2 hover:bg-gray-300 active:bg-gray-500 transition-colors flex items-center justify-center gap-2"
+                  >
+                    <ExternalLink size={16} />
+                    LAUNCH_APP.exe
+                  </a>
+                )
+              )}
 
              {selectedProject.sourceUrl ? (
                <button
@@ -248,22 +247,35 @@ const ProjectsApp: React.FC<ProjectsAppProps> = ({
            </div>
          </div>
 
-         {/* PDF Overlay */}
-         {viewingPdf && (
-           <div className="fixed inset-0 bg-black z-50 flex flex-col">
-             <div className="flex justify-between items-center p-4 bg-gray-900 border-b border-gray-700">
-               <span className="text-white font-bold">PDF Viewer</span>
-               <button onClick={() => setViewingPdf(null)} className="text-white hover:text-gray-300">
-                 <X size={24} />
-               </button>
-             </div>
-             <iframe
-               src={viewingPdf}
-               className="flex-1 w-full"
-               title="PDF Viewer"
-             />
-           </div>
-         )}
+{/* PDF Overlay */}
+          {viewingPdf && (
+            <div className="fixed inset-0 bg-black z-50 flex flex-col">
+              <div className="flex justify-between items-center p-4 bg-gray-900 border-b border-gray-700">
+                <span className="text-white font-bold">PDF Viewer</span>
+                <button onClick={() => setViewingPdf(null)} className="text-white hover:text-gray-300">
+                  <X size={24} />
+                </button>
+              </div>
+              <iframe
+                src={viewingPdf}
+                className="flex-1 w-full"
+                title="PDF Viewer"
+              />
+            </div>
+          )}
+
+          {/* EPUB Overlay */}
+          {viewingEpub && (
+            <div className="fixed inset-0 bg-black z-50 flex flex-col">
+              <div className="flex justify-between items-center p-4 bg-gray-900 border-b border-gray-700">
+                <span className="text-white font-bold">EPUB Reader</span>
+                <button onClick={() => setViewingEpub(null)} className="text-white hover:text-gray-300">
+                  <X size={24} />
+                </button>
+              </div>
+              <div ref={epubContainerRef} className="flex-1 w-full" />
+            </div>
+          )}
 
          {/* Website Overlay */}
          {viewingWebsite && (
