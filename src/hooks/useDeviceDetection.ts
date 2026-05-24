@@ -2,17 +2,6 @@ import { useState, useEffect } from "react";
 
 // Define mobile screen width threshold (typically 768px or less for mobile)
 const MOBILE_WIDTH_THRESHOLD = 768;
-// Define approximate screen dimensions for common mobile devices
-const MOBILE_SCREEN_RATIOS = [
-  { width: 375, height: 667 }, // iPhone SE, older iPhones
-  { width: 414, height: 896 }, // iPhone XR, 11
-  { width: 390, height: 844 }, // iPhone 12, 13 mini
-  { width: 428, height: 926 }, // iPhone 12 Pro Max
-  { width: 360, height: 640 }, // Android standard
-  { width: 412, height: 915 }, // Pixel 6
-  { width: 393, height: 851 }, // Pixel 7
-  { width: 360, height: 780 }, // Foldables
-];
 
 export const useDeviceDetection = () => {
   const [isMobile, setIsMobile] = useState<boolean>(false);
@@ -21,31 +10,21 @@ export const useDeviceDetection = () => {
   useEffect(() => {
     const checkDevice = () => {
       const screenWidth = window.innerWidth;
-      const screenHeight = window.innerHeight;
-
-      // Check screen size first
+      
+      // Determine if it's a mobile or tablet based on width
       const isSmallScreen = screenWidth <= MOBILE_WIDTH_THRESHOLD;
+      const isTabletScreen = screenWidth > MOBILE_WIDTH_THRESHOLD && screenWidth <= 1024;
+      
+      // Also check user agent for mobile/tablet to be more robust
+      const userAgent = typeof window !== 'undefined' ? window.navigator.userAgent.toLowerCase() : '';
+      const isMobileUA = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
+      const isTabletUA = /(ipad|tablet|(android(?!.*mobile))|(windows(?!.*phone)(.*touch))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(userAgent);
 
-      // Check if screen dimensions match known mobile ratios
-      const matchesMobileRatio = MOBILE_SCREEN_RATIOS.some((ratio) => {
-        // Allow some tolerance for different devices
-        const widthMatch = Math.abs(ratio.width - screenWidth) <= 30;
-        const heightMatch = Math.abs(ratio.height - screenHeight) <= 30;
-        return widthMatch && heightMatch;
-      });
+      // Combine both checks
+      const isDefinitelyTablet = isTabletScreen || isTabletUA;
+      const isDefinitelyMobile = (isSmallScreen || isMobileUA) && !isDefinitelyTablet;
 
-      // Calculate diagonal size to differentiate tablet vs phone
-      const diagonalInches =
-        Math.sqrt(screenWidth * screenWidth + screenHeight * screenHeight) /
-        window.devicePixelRatio /
-        96;
-
-      // Determine if it's a mobile device (not tablet)
-      const isDefinitelyMobile =
-        isSmallScreen && matchesMobileRatio && diagonalInches < 7;
-      const isDefinitelyTablet = diagonalInches >= 7 && screenWidth <= 1024;
-
-      setIsMobile(isDefinitelyMobile && !isDefinitelyTablet);
+      setIsMobile(isDefinitelyMobile);
       setIsTablet(isDefinitelyTablet);
     };
 
