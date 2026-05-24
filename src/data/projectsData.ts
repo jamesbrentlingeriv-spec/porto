@@ -4,7 +4,7 @@ export interface ProjectData {
   size: string;
   date: string;
   type: string;
-  iconName: 'Terminal' | 'Layout' | 'Gamepad2' | 'Globe' | 'Cpu' | 'Activity' | 'ShieldAlert' | 'BookOpen' | 'RefreshCw' | 'Box' | 'GraduationCap' | 'BarChart3';
+  iconName: 'Terminal' | 'Layout' | 'Gamepad2' | 'Globe' | 'Cpu' | 'Activity' | 'ShieldAlert' | 'BookOpen' | 'RefreshCw' | 'Box' | 'GraduationCap' | 'BarChart3' | 'Book';
   description: string;
   systemOverview: string;
   tags: string[];
@@ -186,8 +186,8 @@ export const projects: ProjectData[] = [
       '/screenshot/optichart/optichart7.png',
     ],
   },
-  {
-    id: 'prj_10',
+{
+    id: 'prj_06',
     title: 'Pal_Optical_Simulator.exe',
     size: '28.9 MB',
     date: '05-22-2026',
@@ -196,9 +196,44 @@ export const projects: ProjectData[] = [
     description: 'An interactive, gamified simulation environment designed to mimic the fast-paced daily operations, patient interactions, and troubleshooting workflows of a retail optical dispensary.',
     systemOverview: 'Engineered an engaging operational simulator to model retail eyecare workflows, frame selections, and laboratory intake routing. Implements complex state machines to drive dynamic patient profiles, unpredictable script scenarios, and realistic dispensary challenges (such as managing frame order backlogs or resolving lens adaptation complaints). Built with reactive UI states to provide instant user feedback based on clinical decision accuracy, helping apprentice opticians build muscle memory for store protocols. Completely decoupled core simulation logic from visual assets to ensure responsive rendering, snappy input handling, and localized high-score or progress telemetry tracking.',
     tags: ['React', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'Vite', 'Local Storage API'],
-    role: 'Solo Architect & Game Designer',
-    sourceUrl: 'https://pal-optical-sim.vercel.app/',
-    customIconUrl: '/projecticon/palsim.png',
-    videoUrl: '/projectvid/palsim.mp4',
+    role: "Solo Architect & Game Designer",
+    sourceUrl: "https://pal-optical-sim.vercel.app/",
+    customIconUrl: "/projecticon/palopticaltoolkit.png",
+    videoUrl: "/projectvid/palsim.mp4",
+  },
+  {
+    id: "prj_11",
+    title: "The_Shaking_of_My_Hands.epub",
+    size: "4.7 MB",
+    date: "05-23-2026",
+    type: "Document",
+    iconName: "Book",
+    description: "A compelling original fiction manuscript tracking the tragic fall and redemption of Dr. Grant Hayes, a high-stakes pediatric neurosurgeon fighting to conceal a career-ending medical secret.",
+    systemOverview: "Developed a deeply structured narrative blueprint exploring the psychological deterioration of a medical professional experiencing Tardive Dyskinesia (TD). The plot architecture meticulously maps the character's desperation as he resorts to illicit hospital opiate theft to temporarily mask involuntary motor tremors. Tracks a distinct three-act downfall narrative—navigating job loss, domestic estrangement, and survival in a transient motel environment among marginal societal figures. Resolves through a highly calculated redemptive arc where the protagonist builds a successful motivational speaking framework focused on physician burnout and symptomatic concealment, culminating in a structured familial reconciliation.",
+    tags: ["Creative Writing", "Narrative Architecture", "Character Profiling", "Manuscript Design", "Plot Outlining"],
+    role: "Author & Story Architect",
+    customIconUrl: "/projecticon/shaking.png",
+    screenshots: [
+      "/projectvid/shaking.mp4",
+      "/projectvid/shaking2.mp4",
+    ],
+    launchUrl: "/shaking-of-my-hands-assets/book.epub",
+    sourceUrl: "https://the-shaking-of-my-hands-443610928945.us-west1.run.app/",
+  },
+  {
+    id: 'prj_12',
+    title: 'The_Sump_Dark_Eyes_Trilogy.epub',
+    size: '5.2 MB',
+    date: '05-24-2026',
+    type: 'Document',
+    iconName: 'BookOpen',
+    description: 'An original, atmospheric dark fiction installment within "The Dark Eyes Trilogy" series, exploring deep world-building, psychological tension, and gritty localized narratives.',
+    systemOverview: 'Designed and mapped a multi-installment literary series framework centered on high-concept speculative fiction parameters. The narrative blueprint utilizes structured character conflict matrices and grim environmental settings to drive progressive tension throughout the plot. Implements a highly cohesive thematic lore system, coordinating distinct tonal consistency and systemic narrative pacing across interconnected book boundaries to sustain long-form engagement and world continuity.',
+    tags: ['Creative Writing', 'World Building', 'Trilogy Architecture', 'Dark Fiction', 'Plot Mapping'],
+    role: 'Author & Lore Architect',
+    customIconUrl: '/darkeye/sump/The Sump.png',
+    sourceUrl: 'https://youwillsee.us',
+    screenshots: ['/darkeye/sump/The Sump.png'],
+    launchUrl: '/darkeye/sump/the-sump-DIGEST.pdf',
   },
 ];

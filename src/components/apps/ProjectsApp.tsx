@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   ChevronLeft,
   Terminal,
@@ -15,6 +15,8 @@ import {
   Box,
   GraduationCap,
   BarChart3,
+  Book,
+  X,
 } from "lucide-react";
 import { projects } from "../../data/projectsData";
 import type { ProjectData } from "../../data/projectsData";
@@ -32,6 +34,7 @@ const ICONS = {
   Box: Box,
   GraduationCap: GraduationCap,
   BarChart3: BarChart3,
+  Book: Book,
 };
 
 interface ProjectsAppProps {
@@ -44,6 +47,8 @@ const ProjectsApp: React.FC<ProjectsAppProps> = ({
   const [selectedProject, setSelectedProject] = useState<ProjectData | null>(
     initialSelectedProject || null,
   );
+  const [viewingPdf, setViewingPdf] = useState<string | null>(null);
+  const [viewingWebsite, setViewingWebsite] = useState<string | null>(null);
 
   if (selectedProject) {
     const IconComponent = ICONS[selectedProject.iconName] || Terminal;
@@ -167,45 +172,97 @@ const ProjectsApp: React.FC<ProjectsAppProps> = ({
             </div>
           </div>
 
-          {/* External Links */}
-          <div className="mt-auto pt-4 border-t-2 border-gray-800 shrink-0 flex gap-4">
-            {selectedProject.launchUrl && (
-              <a
-                href={selectedProject.launchUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 bg-white text-black font-bold py-2 hover:bg-gray-300 active:bg-gray-500 transition-colors flex items-center justify-center gap-2"
-              >
-                <ExternalLink size={16} />
-                LAUNCH_APP.exe
-              </a>
-            )}
+{/* External Links */}
+           <div className="mt-auto pt-4 border-t-2 border-gray-800 shrink-0 flex gap-4">
+             {selectedProject.launchUrl && (
+               selectedProject.launchUrl.endsWith('.pdf') ? (
+                 <button
+                   onClick={() => setViewingPdf(selectedProject.launchUrl!)}
+                   className="flex-1 bg-white text-black font-bold py-2 hover:bg-gray-300 active:bg-gray-500 transition-colors flex items-center justify-center gap-2"
+                 >
+                   <ExternalLink size={16} />
+                   VIEW_DOCUMENT.pdf
+                 </button>
+               ) : selectedProject.launchUrl.endsWith('.epub') ? (
+                 <a
+                   href={selectedProject.launchUrl}
+                   download={selectedProject.launchUrl.split('/').pop()}
+                   className="flex-1 bg-white text-black font-bold py-2 hover:bg-gray-300 active:bg-gray-500 transition-colors flex items-center justify-center gap-2"
+                 >
+                   <ExternalLink size={16} />
+                   DOWNLOAD_EBOOK.epub
+                 </a>
+               ) : (
+                 <a
+                   href={selectedProject.launchUrl}
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   className="flex-1 bg-white text-black font-bold py-2 hover:bg-gray-300 active:bg-gray-500 transition-colors flex items-center justify-center gap-2"
+                 >
+                   <ExternalLink size={16} />
+                   LAUNCH_APP.exe
+                 </a>
+               )
+             )}
 
-            {selectedProject.sourceUrl ? (
-              <a
-                href={selectedProject.sourceUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full border-2 border-white text-white font-bold py-2 hover:bg-white hover:text-black transition-colors flex items-center justify-center gap-2"
-              >
-                <GitBranch size={16} />
-                VISIT_
-                {selectedProject.sourceUrl
-                  .replace(/^https?:\/\//, "")
-                  .replace(/\/$/, "")
-                  .toUpperCase()
-                  .replace(/\./g, "_")}
-              </a>
-            ) : (
-              <div className="w-full text-center py-2 font-bold text-yellow-400 border-2 border-yellow-400">
-                PROPRIETARY
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    );
-  }
+             {selectedProject.sourceUrl ? (
+               <button
+                 onClick={() => setViewingWebsite(selectedProject.sourceUrl!)}
+                 className="w-full border-2 border-white text-white font-bold py-2 hover:bg-white hover:text-black transition-colors flex items-center justify-center gap-2"
+               >
+                 <GitBranch size={16} />
+                 VISIT_
+                 {selectedProject.sourceUrl
+                   .replace(/^https?:\/\//, "")
+                   .replace(/\/$/, "")
+                   .toUpperCase()
+                   .replace(/\./g, "_")}
+               </button>
+             ) : (
+               <div className="w-full text-center py-2 font-bold text-yellow-400 border-2 border-yellow-400">
+                 PROPRIETARY
+               </div>
+             )}
+           </div>
+         </div>
+
+         {/* PDF Overlay */}
+         {viewingPdf && (
+           <div className="fixed inset-0 bg-black z-50 flex flex-col">
+             <div className="flex justify-between items-center p-4 bg-gray-900 border-b border-gray-700">
+               <span className="text-white font-bold">PDF Viewer</span>
+               <button onClick={() => setViewingPdf(null)} className="text-white hover:text-gray-300">
+                 <X size={24} />
+               </button>
+             </div>
+             <iframe
+               src={viewingPdf}
+               className="flex-1 w-full"
+               title="PDF Viewer"
+             />
+           </div>
+         )}
+
+         {/* Website Overlay */}
+         {viewingWebsite && (
+           <div className="fixed inset-0 bg-black z-50 flex flex-col">
+             <div className="flex justify-between items-center p-4 bg-gray-900 border-b border-gray-700">
+               <span className="text-white font-bold truncate">{viewingWebsite}</span>
+               <button onClick={() => setViewingWebsite(null)} className="text-white hover:text-gray-300 ml-2">
+                 <X size={24} />
+               </button>
+             </div>
+             <iframe
+               src={viewingWebsite}
+               className="flex-1 w-full"
+               title="Website Viewer"
+               sandbox="allow-scripts allow-same-origin allow-forms"
+             />
+           </div>
+         )}
+       </div>
+     );
+   }
 
   return (
     <div className="flex flex-col h-full font-mono text-sm select-none">

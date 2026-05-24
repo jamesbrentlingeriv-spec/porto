@@ -7,33 +7,22 @@ export const useDeviceDetection = () => {
   useEffect(() => {
     const checkDevice = () => {
       const screenWidth = window.innerWidth;
-      
-      // Check user agent safely
       const userAgent = typeof window !== 'undefined' ? window.navigator.userAgent.toLowerCase() : '';
       
-      // Use modern userAgentData API if available (Chrome/Edge on Android)
-      // @ts-ignore
+      // Use modern userAgentData API if available
+      // @ts-expect-error - navigator.userAgentData is experimental
       const isMobileDevice = navigator.userAgentData?.mobile;
       
-      // Fallback user agent checks
       const isAndroid = userAgent.includes('android');
       const isIOS = /iphone|ipad|ipod/.test(userAgent);
       const isMobileUA = /mobile/.test(userAgent);
-      
-      // Check for touch capability (good indicator for mobile/tablet)
       const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-      // Logic for mobile (phones) vs tablet
-      // iPads are usually > 768px wide. Most modern phones in portrait are <= 500px wide, but can be up to 430px.
-      // Landscape phones might be up to 932px wide.
-      
       let definitelyMobile = false;
       let definitelyTablet = false;
 
-      if (isMobileDevice === true) {
-        // The browser explicitly tells us it's a mobile device
-        definitelyMobile = true;
-      } else if (isIOS) {
+      // 1. Explicit user agent checks
+      if (isIOS) {
         if (userAgent.includes('ipad') || (hasTouch && screenWidth >= 768)) {
           definitelyTablet = true;
         } else {
@@ -43,17 +32,24 @@ export const useDeviceDetection = () => {
         if (isMobileUA) {
           definitelyMobile = true;
         } else {
-          // Android without 'mobile' in UA is typically a tablet
           definitelyTablet = true;
         }
-      } else if (hasTouch && screenWidth <= 768) {
-        // Fallback for unknown touch devices
-        definitelyMobile = true;
-      } else if (hasTouch && screenWidth > 768 && screenWidth <= 1366) {
-        definitelyTablet = true;
       }
 
-      // If screen is extremely narrow, always force mobile layout regardless of UA
+      // 2. Fallback checks if UA didn't give a definitive answer
+      if (!definitelyMobile && !definitelyTablet) {
+        if (isMobileDevice === true) {
+          definitelyMobile = true;
+        } else if (hasTouch) {
+          if (screenWidth <= 768) {
+            definitelyMobile = true;
+          } else if (screenWidth > 768 && screenWidth <= 1366) {
+            definitelyTablet = true;
+          }
+        }
+      }
+
+      // 3. Absolute screen width overrides (safety net)
       if (screenWidth <= 600) {
         definitelyMobile = true;
         definitelyTablet = false;
@@ -63,16 +59,9 @@ export const useDeviceDetection = () => {
       setIsTablet(definitelyTablet);
     };
 
-    // Run check initially
     checkDevice();
-
-    // Add resize listener
     window.addEventListener("resize", checkDevice);
-
-    // Cleanup listener
-    return () => {
-      window.removeEventListener("resize", checkDevice);
-    };
+    return () => window.removeEventListener("resize", checkDevice);
   }, []);
 
   return { isMobile, isTablet };
