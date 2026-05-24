@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
 
-// Define mobile screen width threshold (typically 768px or less for mobile)
-const MOBILE_WIDTH_THRESHOLD = 768;
-
 export const useDeviceDetection = () => {
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [isTablet, setIsTablet] = useState<boolean>(false);
@@ -11,21 +8,59 @@ export const useDeviceDetection = () => {
     const checkDevice = () => {
       const screenWidth = window.innerWidth;
       
-      // Determine if it's a mobile or tablet based on width
-      const isSmallScreen = screenWidth <= MOBILE_WIDTH_THRESHOLD;
-      const isTabletScreen = screenWidth > MOBILE_WIDTH_THRESHOLD && screenWidth <= 1024;
-      
-      // Also check user agent for mobile/tablet to be more robust
+      // Check user agent safely
       const userAgent = typeof window !== 'undefined' ? window.navigator.userAgent.toLowerCase() : '';
-      const isMobileUA = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
-      const isTabletUA = /(ipad|tablet|(android(?!.*mobile))|(windows(?!.*phone)(.*touch))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(userAgent);
+      
+      // Use modern userAgentData API if available (Chrome/Edge on Android)
+      // @ts-ignore
+      const isMobileDevice = navigator.userAgentData?.mobile;
+      
+      // Fallback user agent checks
+      const isAndroid = userAgent.includes('android');
+      const isIOS = /iphone|ipad|ipod/.test(userAgent);
+      const isMobileUA = /mobile/.test(userAgent);
+      
+      // Check for touch capability (good indicator for mobile/tablet)
+      const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-      // Combine both checks
-      const isDefinitelyTablet = isTabletScreen || isTabletUA;
-      const isDefinitelyMobile = (isSmallScreen || isMobileUA) && !isDefinitelyTablet;
+      // Logic for mobile (phones) vs tablet
+      // iPads are usually > 768px wide. Most modern phones in portrait are <= 500px wide, but can be up to 430px.
+      // Landscape phones might be up to 932px wide.
+      
+      let definitelyMobile = false;
+      let definitelyTablet = false;
 
-      setIsMobile(isDefinitelyMobile);
-      setIsTablet(isDefinitelyTablet);
+      if (isMobileDevice === true) {
+        // The browser explicitly tells us it's a mobile device
+        definitelyMobile = true;
+      } else if (isIOS) {
+        if (userAgent.includes('ipad') || (hasTouch && screenWidth >= 768)) {
+          definitelyTablet = true;
+        } else {
+          definitelyMobile = true;
+        }
+      } else if (isAndroid) {
+        if (isMobileUA) {
+          definitelyMobile = true;
+        } else {
+          // Android without 'mobile' in UA is typically a tablet
+          definitelyTablet = true;
+        }
+      } else if (hasTouch && screenWidth <= 768) {
+        // Fallback for unknown touch devices
+        definitelyMobile = true;
+      } else if (hasTouch && screenWidth > 768 && screenWidth <= 1366) {
+        definitelyTablet = true;
+      }
+
+      // If screen is extremely narrow, always force mobile layout regardless of UA
+      if (screenWidth <= 600) {
+        definitelyMobile = true;
+        definitelyTablet = false;
+      }
+
+      setIsMobile(definitelyMobile);
+      setIsTablet(definitelyTablet);
     };
 
     // Run check initially
