@@ -49,6 +49,28 @@ const ProjectsApp: React.FC<ProjectsAppProps> = ({
   );
   const [viewingPdf, setViewingPdf] = useState<string | null>(null);
   const [viewingWebsite, setViewingWebsite] = useState<string | null>(null);
+  const [viewingEpub, setViewingEpub] = useState<string | null>(null);
+  const epubContainerRef = useRef<HTMLDivElement>(null);
+  const epubInstanceRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (viewingEpub && epubContainerRef.current && !epubInstanceRef.current) {
+      import('epubjs').then(({ default: ePub }) => {
+        const reader = ePub(viewingEpub);
+        reader.renderTo(epubContainerRef.current!, {
+          width: '100%',
+          height: '100%',
+        });
+        epubInstanceRef.current = reader;
+      });
+    }
+    return () => {
+      if (epubInstanceRef.current) {
+        epubInstanceRef.current.destroy();
+        epubInstanceRef.current = null;
+      }
+    };
+  }, [viewingEpub]);
 
   if (selectedProject) {
     const IconComponent = ICONS[selectedProject.iconName] || Terminal;
